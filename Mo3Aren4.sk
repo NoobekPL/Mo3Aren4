@@ -1,0 +1,9 @@
+command /mo3 [<text>] [<text>]:
+	aliases: mob, mobarena, ma, mo3aren4
+	trigger:
+		if arg 1 is not set:
+			if arg2 is not set:
+				send "&c----------[&bMo3Aren4&c]----------" to player
+				send "&a/mo3 info  &fInforacje o skrypcie"
+				send "&a/mo3 help  &fPomoc"
+				send "&a/mo3 stworz  &fTworzenie areny"
