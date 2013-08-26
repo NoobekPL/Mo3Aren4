@@ -4,6 +4,20 @@ command /mo3 [<text>] [<text>]:
 		if arg 1 is not set:
 			if arg2 is not set:
 				send "&c----------[&bMo3Aren4&c]----------" to player
-				send "&a/mo3 info  &fInforacje o skrypcie"
-				send "&a/mo3 help  &fPomoc"
-				send "&a/mo3 stworz  &fTworzenie areny"
+				send "&a/mo3 info  &fInforacje o skrypcie" to player
+				send "&a/mo3 pomoc  &fPomoc" to player
+				send "&a/mo3 stworz  &fTworzenie areny" to player
+				stop
+		
+		if arg 1 is "help" or "pomoc":
+			if arg 2 is not set:
+				send "&c----------[&bMo3Aren4&c]----------" to player
+				send "&a/mo3 info  &fInforacje o skrypcie" to player
+				send "&a/mo3 pomoc  &fPomoc" to player
+				send "&a/mo3 stworz  &fTworzenie areny" to player
+				stop
+		if arg 1 is "info" or "informacje" or "version" or "wersja" or "author" or "autor":
+			if arg 2 is not set:
+				send "&c----------[&bMo3Aren4&c]----------" to player
+				send "&aWersja: &f0.1" to player
+				send "&aAutorzy: &fNoobekPL &aoraz &fDzikoysk"
