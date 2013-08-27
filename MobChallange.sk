@@ -44,37 +44,55 @@ command /mob [<text>] [<text>] [<text>]:
 				send "&aAutorzy: &fNoobekPL &aoraz &fDzikoysk" to player
 
 		if arg 1 is "stworz" or "create":
-			if arg 2 is set:
-				if {mob.arena.name.%arg 2%} is set:
-					send "&cJest juz MobArena o takiej nazwie!"
-					stop
-				else:
-					set {mob.arena.name.%arg 2%} to "%arg 2%"
-					set {mob.arena.arena.%arg 2%} to true
-					add "%arg 2%" to {mob.arenas::*}
-					send "{@tag} Stworzyles arene, teraz musisz ja odpowiednio skonfigurowac!" to player
-					send "{@tag} Teraz musisz zaznaczyc cuboid i wpisac &a/mob cuboid" to player
-					stop
+			if arg 2 is not set:
+				set {mob.arena.temp} to true
+				send "{@tag} Stworzyles arene, teraz musisz ja odpowiednio skonfigurowac!" to player
+				send "{@tag} Teraz musisz zaznaczyc cuboid i wpisac &a/mob cuboid" to player
+				stop
 		if arg 1 is "setwarp":
-			if arg 2 is set:
-				if {mob.arena.name.%arg 2%} is not set:
-					send "&cNie ma areny o takiej nazwie!"
-					stop
-				if arg 3 is not set:
-					send "&cWarpy: lobby, spawn, spectator"
-					stop
-				if arg 3 is "spawn":
-					set {mob.arena.spawn.%arg 2%} to location of player
-					send "&aUstawiono spawn graczy dla areny: &6%arg 2%"
-					stop
-				if arg 3 is "lobby":
-					set {mob.arena.lobby.%arg 2%} to location of player
-					send "&aUstawiono lobby dla areny: &6%arg 2%"
-					stop
-				if arg 3 is "spectator":
-					set {mob.arena.spectator.%arg 2%} to location of player
-					send "&aUstawiono obserwatora dla areny: &6%arg 2%"
-					stop
+			if arg 2 is not set:
+				send "&cWarpy: lobby, spawn, spectator"
+				stop
+			if arg 2 is "spawn":
+				set {mob.arena.temp.spawn} to location of player
+				send "&aUstawiono spawn graczy dla areny"
+				if {mob.arena.temp.lobby} is set:
+					if {mob.arena.temp.spectator} is set:
+						send "&aUstawiono wszystkie warpy!"
+					else:
+						send "&aMusisz ustawic jeszcze warp &6spectator!"
+				else:
+					if {mob.arena.temp.spectator} is set:
+						send "&aMusisz ustawic jeszcze warp &6lobby!"
+					else:
+						send "&aMusisz ustawic jeszcze warp &6spectator!&a oraz warp &6lobby"
+				stop
+			if arg 2 is "lobby":
+				set {mob.arena.temp.lobby} to location of player
+				send "&aUstawiono lobby graczy dla areny"
+				if {mob.arena.temp.spawn} is set:
+					if {mob.arena.temp.spectator} is set:
+						send "&aUstawiono wszystkie warpy!"
+					else:
+						send "&aMusisz ustawic jeszcze warp &6spectator!"
+				else:
+					if {mob.arena.temp.spectator} is set:
+						send "&aMusisz ustawic jeszcze warp &6spawn!"
+					else:
+						send "&aMusisz ustawic jeszcze warp &6spectator!&a oraz warp &6spawn"
+			if arg 2 is "spectator":
+				set {mob.arena.temp.spectator} to location of player
+				send "&aUstawiono obserwatora graczy dla areny"
+				if {mob.arena.temp.lobby} is set:
+					if {mob.arena.temp.spawn} is set:
+						send "&aUstawiono wszystkie warpy!"
+					else:
+						send "&aMusisz ustawic jeszcze warp &6spawn!"
+				else:
+					if {mob.arena.temp.spectator} is set:
+						send "&aMusisz ustawic jeszcze warp &6lobby!"
+					else:
+						send "&aMusisz ustawic jeszcze warp &6spawn!&a oraz warp &6lobby"
 		if arg 1 is "list" or "lista":
 			send "{@tag} &aMobAreny: &6%{mob.arenas::*}%"
 			stop
