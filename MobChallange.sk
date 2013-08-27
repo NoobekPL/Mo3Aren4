@@ -1,3 +1,17 @@
+#--------------------#
+# Name: MobChallange #
+# Version: 0.1 Build #
+# Authors: NoobekPL  #
+#    & Dzikoysk      #
+#--------------------#
+
+# Config
+options:
+
+	tag: [MobArena]
+
+
+# Code
 command /mob [<text>] [<text>]:
 	aliases: mobarena, ma, mobchallange
 	trigger:
