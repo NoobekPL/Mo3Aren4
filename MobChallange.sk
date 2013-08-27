@@ -8,16 +8,16 @@
 # Config
 options:
 
-	tag: &c[&bMobArena&c]&f
+	tag: &c[&aMobArena&c]&f
 
 
 # Code
-command /mob [<text>] [<text>]:
+command /mob [<text>] [<text>] [<text>]:
 	aliases: mobarena, ma, mobchallange
 	trigger:
 		if arg 1 is not set:
 			if arg2 is not set:
-				send "&c----------%{tag}%&c----------" to player
+				send "&c----------{@tag}&c----------" to player
 				send "&a/mob info  &fInforacje o skrypcie" to player
 				send "&a/mob pomoc  &fPomoc" to player
 				send "&a/mob stworz  &fTworzenie areny" to player
@@ -28,7 +28,7 @@ command /mob [<text>] [<text>]:
 
 		if arg 1 is "help" or "pomoc":
 			if arg 2 is not set:
-				send "&c----------%{tag}%&c----------" to player
+				send "&c----------{@tag}&c----------" to player
 				send "&a/mob info  &fInforacje o skrypcie" to player
 				send "&a/mob pomoc  &fPomoc" to player
 				send "&a/mob stworz  &fTworzenie areny" to player
@@ -39,15 +39,39 @@ command /mob [<text>] [<text>]:
 
 		if arg 1 is "info" or "informacje" or "version" or "wersja" or "author" or "autor":
 			if arg 2 is not set:
-				send "&c----------%{tag}%&c----------" to player
+				send "&c----------{@tag}&c----------" to player
 				send "&aWersja: &f0.1" to player
 				send "&aAutorzy: &fNoobekPL &aoraz &fDzikoysk" to player
 
 		if arg 1 is "stworz" or "create":
-			if arg 2 is not set:
-				if {mob.arena.temp} is set:
-					send "%{tag}% Jakas arena jest w trakcie przygotowania!" to player
+			if arg 2 is set:
+				if {mob.arena.name.%arg 2%} is set:
+					send "&cJest juz MobArena o takiej nazwie!"
+					stop
 				else:
-					set {mob.arena.temp} to true
-					send "%{tag}% stworzyles arene, teraz musisz ja odpowiednio skonfigurowac!" to player
-					send "%{tag}% Teraz musisz zaznaczyc cuboid i wpisac &a/mob cuboid" to player
+					set {mob.arena.name.%arg 2%} to "%arg 2%"
+					set {mob.arena.arena.%arg 2%} to true
+					add "%arg 2%" to {mob.arenas::*}
+					send "{@tag} Stworzyles arene, teraz musisz ja odpowiednio skonfigurowac!" to player
+					send "{@tag} Teraz musisz zaznaczyc cuboid i wpisac &a/mob cuboid" to player
+					stop
+		if arg 1 is "setwarp":
+			if arg 2 is set:
+				if {mob.arena.name.%arg 2%} is not set:
+					send "&cNie ma areny o takiej nazwie!"
+					stop
+				if arg 3 is not set:
+					send "&cWarpy: lobby, spawn, spectator"
+					stop
+				if arg 3 is "spawn":
+					stop
+				if arg 3 is "lobby":
+					stop
+				if arg 3 is "spectator":
+					stop
+		if arg 1 is "list" or "lista":
+			send "{@tag} &aMobAreny: &6%{mob.arenas::*}%"
+			stop
+					
+					
+					
